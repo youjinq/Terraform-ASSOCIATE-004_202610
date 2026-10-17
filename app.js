@@ -67,7 +67,9 @@ function render(){
     const input=document.createElement('input');input.type=q.answer.length>1?'checkbox':'radio';input.name='answer';input.value=o.key;input.checked=r.selected.includes(o.key);input.disabled=locked||q.noValidAnswer;
     input.onchange=()=>{let selected=[...$('options').querySelectorAll('input:checked')].map(i=>i.value);state.answers[q.id]={selected,status:'draft'};save();for(const node of $('options').querySelectorAll('.option'))node.classList.toggle('selected',node.querySelector('input').checked);};
     const letter=document.createElement('span');letter.className='letter';letter.textContent=o.key+'.';const body=document.createElement('span');body.className='option-body';body.textContent=o.text;
-    if(o.image){const img=document.createElement('img');img.src=o.image;img.alt=`选项 ${o.key} 的 Terraform 代码`;body.append(img);}label.append(input,letter,body);$('options').append(label);
+    if(o.image){const img=document.createElement('img');img.src=o.image;img.alt=`选项 ${o.key} 的 Terraform 代码`;body.append(img);}label.append(input,letter,body);
+    if(locked&&!q.noValidAnswer&&q.answer.includes(o.key)){const check=document.createElement('span');check.className='answer-check';check.textContent='✓';check.setAttribute('role','img');check.setAttribute('aria-label','正确答案');label.append(check);}
+    $('options').append(label);
   }
   $('submit').hidden=locked||q.noValidAnswer;$('reveal').hidden=locked;$('reveal').textContent='查看答案与解析';$('retry').hidden=!locked||q.noValidAnswer;
   $('result').hidden=!locked;$('result').replaceChildren();
