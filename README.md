@@ -1,5 +1,9 @@
 # Terraform Associate 004 练习题库
 
+## ▶ [点击这里，开始答题](https://youjinq.github.io/Terraform-ASSOCIATE-004_202610/?v=3)
+
+**手机 GitHub App 用户：点上面的链接即可进入答题网页。** 也可以在文件列表打开 **00-开始答题.md**，再点击里面的「开始答题」。无需打开代码文件。
+
 从用户提供的 202610 英文 PDF 转为纯静态 HTML：167 道题、26 题的社区 Comments、8 张代码图片。每题附英文解析及 HashiCorp 官方资料链接；浅蓝色界面、Terraform 图标及 YJ 水印。
 
 解析核对日期：2026-10-17。原 PDF 答案与社区评论保留供对照，解析是另外编写的学习说明。
