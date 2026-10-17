@@ -103,4 +103,13 @@ $('topic').onchange=applyFilter;$('filter').onchange=applyFilter;$('search').oni
 $('export').onclick=()=>{const blob=new Blob([JSON.stringify({...state,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='terraform-004-progress-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('进度备份已导出');};
 $('import').onclick=()=>$('import-file').click();
 $('import-file').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>2000000)throw Error('文件过大');const imported=validate(JSON.parse(await file.text()));if(!confirm('导入会替换当前进度和笔记。确定继续？'))return;state=imported;active=state.current;lastPosition=active;$('topic').value='all';$('filter').value='all';$('search').value='';visible=questions;save();render();toast(storageOK?'已恢复进度':'已载入进度，但浏览器无法自动保存，请保留备份');}catch{toast('导入失败，请选择此题库导出的 JSON 进度文件');}finally{e.target.value='';}};
+const NAV_KEY=KEY+'-navigation-collapsed';
+function setNavigationCollapsed(collapsed){
+  $('nav-content').hidden=collapsed;
+  document.querySelector('.workspace').classList.toggle('nav-collapsed',collapsed);
+  $('nav-toggle').setAttribute('aria-expanded',String(!collapsed));
+  $('nav-toggle').textContent=collapsed?'展开 ▾':'收起 ▴';
+}
+try{setNavigationCollapsed(localStorage.getItem(NAV_KEY)==='true');}catch{setNavigationCollapsed(false);}
+$('nav-toggle').onclick=()=>{const collapsed=!$('nav-content').hidden;setNavigationCollapsed(collapsed);try{localStorage.setItem(NAV_KEY,String(collapsed));}catch{}};
 render();if(startup)toast(startup);
